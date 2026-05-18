@@ -148,11 +148,12 @@ def main_menu(bank):
             "Login",
             "Create account",
             "List all accounts",
+            "Search account by name",
             "Admin",
             "Exit",
         ])
 
-        choice = get_menu_choice(5)
+        choice = get_menu_choice(6)
 
         if choice == "1":
             acc_id = input("Enter your account ID: ").strip()
@@ -167,9 +168,13 @@ def main_menu(bank):
             bank.list_accounts()
 
         elif choice == "4":
-            _admin_login(bank)
+            name = input("Enter name to search: ").strip()
+            bank.search_by_name(name)
 
         elif choice == "5":
+            _admin_login(bank)
+
+        elif choice == "6":
             console.print("\n👋 [cyan]Thanks for using PyBank. Goodbye![/cyan]\n")
             break
 

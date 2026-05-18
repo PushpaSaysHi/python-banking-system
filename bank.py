@@ -302,3 +302,40 @@ class Bank:
             table.add_row(row["date"], status)
 
         console.print(table)
+    
+    # ── Search by name ───────────────────────────────────
+        
+    def search_by_name(self, name: str):
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT account_id, owner_name, account_type, balance
+            FROM accounts
+            WHERE owner_name LIKE ?
+        """, (f"%{name}%",))
+        rows = cursor.fetchall()
+        conn.close()
+
+        if not rows:
+            print(f"❌ No accounts found for '{name}'")
+            return
+
+        from rich.table import Table
+        from rich.console import Console
+        console = Console()
+
+        table = Table(title=f"Search Results for '{name}'", style="cyan")
+        table.add_column("Account ID", style="yellow")
+        table.add_column("Name")
+        table.add_column("Type")
+        table.add_column("Balance", justify="right", style="green")
+
+        for row in rows:
+            table.add_row(
+                row["account_id"],
+                row["owner_name"],
+                row["account_type"],
+                f"${row['balance']:.2f}"
+            )
+
+        console.print(table)
