@@ -1,6 +1,10 @@
 """
 config.py — All constants and settings for PyBank
 """
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 DB_FILE = "bank.db"
 
@@ -16,8 +20,8 @@ ACCOUNT_TYPES = {
 # Fill these in with your own Gmail credentials
 # For Gmail: enable 2FA then create an App Password at
 #   https://myaccount.google.com/apppasswords
-EMAIL_ENABLED  = True          # set to True once you fill in credentials
-EMAIL_ADDRESS  = "pushpak3705@gmail.com"
-EMAIL_PASSWORD = "sqyo eukp jumw sdre"
+EMAIL_ENABLED  = True           # set to True once you fill in credentials
+EMAIL_ADDRESS  = os.getenv("EMAIL_ADDRESS")
+EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
 EMAIL_HOST     = "smtp.gmail.com"
 EMAIL_PORT     = 587
